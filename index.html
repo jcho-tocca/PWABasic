@@ -22,10 +22,12 @@
 
 	<h1>PWA</h1>
 	<p>PWA is ...</p>
+	<p id="token"></p>
 	<img src="./images/icon-152x152.png" alt="">
 	<div id="install-button" hidden>
 		<img src="./images/download.jpg" alt="" width="50">
 	</div>
+
 
 <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
 <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
@@ -55,6 +57,7 @@
 			.requestPermission()
 			.then(function () {
 				console.log('Notification Permission');
+				return messaging.getToken();
 			})
 			.then(function (token) {
 				console.log('Token : ' + token);
