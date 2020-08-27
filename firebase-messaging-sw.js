@@ -13,15 +13,23 @@ importScripts('https://www.gstatic.com/firebasejs/7.18.0/firebase-messaging.js')
 		appId: "1:748149992733:web:b2c737ad6a9317e68845f4",
 		measurementId: "G-WL5Y6F6GBP"
 	};
+	
 	// Initialize Firebase
 	firebase.initializeApp(firebaseConfig);
 
 	// Firebase Messaging object 取得
 	const messaging = firebase.messaging();
 
-	// このハンドラーがバックグラウンドでNotification をハンドリングする
+	// このハンドラーがBackgroundでNotification をハンドリングする(ブラウザを閉じても通知が立ち上がる)
 	messaging.setBackgroundMessageHandler(function(payload) {
 		console.log('[firebase-messaging-sw.js] Received background message ', payload);
+		const notification = JSON.parse(payload);
+		const notificationOptions = {
+			body:notification.body,
+			icon:notification.icon
+		};
+
+		return self.registration.showNotification(payload.notification.title, notificationOptions);
 		// Customize notification here
 		// const notificationTitle = 'Background Message Title';
 		// const notificationOptions = {
