@@ -4,7 +4,7 @@ const CACHE_NAME = 'static-cache-v1';
 // キャッシュ対象リソース
 const FILES_TO_CACHE = [
 	'./',
-	'./index.php',
+	'./index.html',
 	'./images/icon-128x128.png',
 	'./images/icon-144x144.png',
 	'./images/icon-152x152.png',
@@ -18,7 +18,7 @@ self.addEventListener('install', event => {
 	event.waitUntil(
 		caches.open(CACHE_NAME).then((cache) => {
 			console.log('[ServiceWorker] Pre-caching offline page');
-			return cache.addAll(FILES_TO_CACHE);
+			return cache.addAll(urlsToCache.map(url => new Request(url, {credentials: 'same-origin'})));
 		})
 	);
 });
